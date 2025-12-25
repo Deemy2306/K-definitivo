@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para Keytleen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(0,0,0,0.05) 0px,
+      rgba(0,0,0,0.05) 40px,
+      rgba(0,0,0,0.12) 40px,
+      rgba(0,0,0,0.12) 80px
+    ),
+    linear-gradient(180deg,#0b3d1f,#145c32,#0b3d1f);
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* 🎀 Decoraciones esquinas */
+.decor{
+  position:fixed;
+  font-size:clamp(1.5rem,4vw,2rem);
+  z-index:5;
+  opacity:.9;
+  animation:decorFloat 6s ease-in-out infinite;
+}
+@keyframes decorFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+.top-left{top:10px;left:10px}
+.top-right{top:10px;right:10px}
+.bottom-left{bottom:10px;left:10px}
+.bottom-right{bottom:10px;right:10px}
+
+/* ❄️ NIEVE */
+.snow{
+  position:fixed;
+  top:-10px;
+  pointer-events:none;
+  opacity:.25;
+  z-index:1;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  to{transform:translateY(110vh)}
+}
+
+/* ✨ EMOJIS FONDO */
+.bg-emoji{
+  position:fixed;
+  opacity:.15;
+  z-index:1;
+  pointer-events:none;
+  animation:bgFloat linear forwards;
+}
+@keyframes bgFloat{
+  from{transform:translateY(110vh)}
+  to{transform:translateY(-120vh)}
+}
+
+/* ❤️ Corazones finales */
+.heart{
+  position:fixed;
+  top:-10px;
+  pointer-events:none;
+  z-index:4;
+  animation:fall linear forwards;
+}
+
+.container{
+  text-align:center;
+  width:100%;
+  max-width:900px;
+  padding:20px;
+  z-index:3;
+}
+
+/* 🎁 Emoji central */
+.gift{
+  font-size:clamp(6rem,9vw,7.5rem);
+  cursor:pointer;
+  animation:giftFloat 3s ease-in-out infinite;
+}
+@keyframes giftFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-15px)}
+}
+
+/* 🪵 Mesa con más detalle */
+.table{
+  background:linear-gradient(180deg,#7a4a24,#5a3518);
+  padding:35px 25px 50px;
+  border-radius:22px;
+  box-shadow:0 20px 50px rgba(0,0,0,.6), inset 0 0 10px rgba(255,255,255,.1);
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* 🃏 CARTAS */
+.cards{
+  display:flex;
+  flex-direction:column;
+  gap:25px;
+  align-items:center;
+}
+
+.row{
+  display:flex;
+  gap:15px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.card{
+  width:clamp(90px,22vw,130px);
+  height:clamp(130px,30vw,185px);
+  perspective:1000px;
+  animation:floatCard 4s ease-in-out infinite;
+}
+@keyframes floatCard{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+}
+
+.card-inner{
+  width:100%;
+  height:100%;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:transform .8s cubic-bezier(.4,.2,.2,1);
+  cursor:pointer;
+}
+
+.card-inner.flipped{
+  transform:rotateY(180deg);
+  animation:cardGlow 1s ease;
+}
+
+/* ✨ Brillo al voltear */
+@keyframes cardGlow{
+  0%{box-shadow:0 0 0 rgba(255,255,255,0)}
+  50%{box-shadow:0 0 25px rgba(255,255,255,.8)}
+  100%{box-shadow:0 0 0 rgba(255,255,255,0)}
+}
+
+.face{
+  position:absolute;
+  width:100%;
+  height:100%;
+  border-radius:16px;
+  backface-visibility:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:10px;
+  text-align:center;
+  font-weight:bold;
+  box-shadow:0 10px 25px rgba(0,0,0,.45);
+}
+
+/* Dorso carta */
+.back{
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #b71c1c,
+      #b71c1c 10px,
+      #7f0000 10px,
+      #7f0000 20px
+    );
+  border:3px solid #f5d76e;
+}
+
+/* Frente carta */
+.front{
+  background:linear-gradient(145deg,#fff,#f7f2e8);
+  color:#333;
+  transform:rotateY(180deg);
+  border:3px solid #c9a227;
+  box-shadow:inset 0 0 12px rgba(255,215,0,.6);
+}
+
+/* Botón */
+button{
+  margin-top:25px;
+  padding:12px 32px;
+  font-size:1rem;
+  border:none;
+  border-radius:25px;
+  background:linear-gradient(145deg,#ff4d6d,#ff2f55);
+  color:white;
+  cursor:pointer;
+  animation:btnPulse 2.5s infinite;
+}
+@keyframes btnPulse{
+  0%,100%{box-shadow:0 0 0 rgba(255,77,109,0)}
+  50%{box-shadow:0 0 20px rgba(255,77,109,.6)}
+}
+
+/* 💌 Mensaje final */
+.message{
+  background:rgba(0,0,0,.55);
+  padding:22px;
+  border-radius:15px;
+  max-height:75vh;
+  overflow-y:auto;
+  line-height:1.6;
+  animation:finalGlow 3s ease-in-out infinite;
+}
+@keyframes finalGlow{
+  0%,100%{box-shadow:0 0 15px rgba(255,215,150,.4)}
+  50%{box-shadow:0 0 30px rgba(255,215,150,.8)}
+}
+
+/* ✨ Brillo dedo */
+.spark{
+  position:fixed;
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:radial-gradient(circle,#fff,rgba(255,255,255,0));
+  pointer-events:none;
+  animation:spark .6s ease-out forwards;
+}
+@keyframes spark{
+  to{transform:scale(2);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<div class="decor top-left">🎀</div>
+<div class="decor top-right">⭐</div>
+<div class="decor bottom-left">🎄</div>
+<div class="decor bottom-right">🔔</div>
+
+<div class="container" id="app"></div>
+
+<script>
+const app=document.getElementById("app");
+
+/* ✨ Brillo dedo */
+document.addEventListener("pointermove",e=>{
+  const s=document.createElement("div");
+  s.className="spark";
+  s.style.left=e.clientX+"px";
+  s.style.top=e.clientY+"px";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),600);
+});
+
+/* ❄️ NIEVE */
+function snow(){
+  const s=document.createElement("div");
+  s.className="snow";
+  s.innerHTML="❄️";
+  s.style.left=Math.random()*100+"vw";
+  s.style.fontSize=10+Math.random()*10+"px";
+  s.style.animationDuration=4+Math.random()*4+"s";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),9000);
+}
+for(let i=0;i<10;i++)snow();
+setInterval(snow,500);
+
+/* ✨ EMOJIS FONDO */
+const bg=["✨","⭐","🎄","💖"];
+function bgEmoji(){
+  const e=document.createElement("div");
+  e.className="bg-emoji";
+  e.innerHTML=bg[Math.floor(Math.random()*bg.length)];
+  e.style.left=Math.random()*100+"vw";
+  e.style.fontSize=18+Math.random()*18+"px";
+  e.style.animationDuration=14+Math.random()*10+"s";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),25000);
+}
+setInterval(bgEmoji,2500);
+
+/* ❤️ Final */
+function hearts(){
+  for(let i=0;i<50;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=16+Math.random()*12+"px";
+    h.style.animationDuration=2+Math.random()*3+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  }
+}
+
+/* PANTALLA 1 */
+app.innerHTML=`
+<h2>🎁 Para Keytleen 🎁</h2>
+<div class="gift" onclick="openGift()">🎁</div>
+<p>Toca el regalo</p>
+`;
+
+function openGift(){
+  showCards();
+}
+
+/* PANTALLA 2 */
+let opened=0;
+function showCards(){
+  opened=0;
+  app.innerHTML=`
+    <h3>✨ Toca las cartas ✨</h3>
+    <div class="table">
+      <div class="cards">
+        <div class="row">
+          ${card("Eres preciosa", "-5deg")}
+          ${card("Eres única", "5deg")}
+        </div>
+        <div class="row">
+          ${card("Eres muy inteligente", "-6deg")}
+          ${card("Eres maravillosa", "0deg")}
+          ${card("Feliz Navidad", "6deg")}
+        </div>
+      </div>
+    </div>
+    <button id="continue" style="display:none" onclick="showEnvelope()">Continuar</button>
+  `;
+}
+
+function card(text, rotation){
+  return `
+  <div class="card" style="transform:rotate(${rotation});">
+    <div class="card-inner" onclick="flip(this)">
+      <div class="face back"></div>
+      <div class="face front">${text}</div>
+    </div>
+  </div>`;
+}
+
+function flip(inner){
+  if(!inner.classList.contains("flipped")){
+    inner.classList.add("flipped");
+    opened++;
+    if(opened===5){
+      document.getElementById("continue").style.display="inline-block";
+    }
+  }
+}
+
+/* PANTALLA 3 */
+function showEnvelope(){
+  app.innerHTML=`
+    <div class="gift" onclick="finalMessage()">💌</div>
+  `;
+}
+
+/* FINAL */
+function finalMessage(){
+  hearts();
+  app.innerHTML=`
+    <div class="message">
+      Esta Navidad quise regalarte algo diferente,
+      algo sencillo pero hecho con mucho cariño.<br><br>
+
+      Keytleen, desde que llegaste a mi vida,
+      todo se siente más bonito, más ligero
+      y lleno de sonrisas sinceras.<br><br>
+
+      Admiro tu forma de ser, tu manera de pensar
+      y esa luz tan especial que llevas contigo.<br><br>
+
+      Que esta Navidad esté llena de amor,
+      paz, alegría y momentos inolvidables.<br><br>
+
+      Gracias por tu ternura, tu paciencia y tu risa,
+      que iluminan cada día y lo hacen más especial.<br><br>
+
+      Que cada sueño se cumpla y que la magia
+      de la Navidad acompañe siempre tu corazón.<br><br>
+
+      <strong>Con todo mi cariño,<br>
+      De Meyed para Keytleen ❤️</strong>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
